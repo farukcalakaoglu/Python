@@ -1,0 +1,47 @@
+#Kütüphane Otomasyonu, 
+class Kitap:
+    def __init__(self,isim,yazar,stok):
+        self.isim=isim
+        self.yazar=yazar
+        self.stok=stok
+    def bilgi(self):
+        return f"{self.isim} {self.yazar} {self.stok}"
+#kütüphane
+
+class Kutuphane:
+    def __init__(self): #kütüphene dizi oluşturma
+        self.kitaplar=[]
+    def kitap_ekle(self,kitap): #kütüphane kitap ekleme
+        self.kitaplar.append(kitap)
+        print(f"{kitap.isim} kütüphenye eklendi")    
+        
+    def odunc_al(self,kitap_adi): #kütüphane kitap alma
+        for kitap in self.kitaplar: #for döngüsü ile self.kitap dizi kitap içinde gez
+            if kitap.isim == kitap_adi and kitap.stok >0: #kitap adı ve stok kontrolu ediyor
+                kitap.stok-=1# kitap verince kitap siliyor
+                print(f"{kitap.isim} ödünc verildi . {kitap.stok} kitap kaldı")
+                return 
+            print(f"{kitap_adi} kitap kütüphanede yok. Kitap bitmiş")
+    
+    def kitap_ver(self,kitap_adi): # kütüpheya kitap geri veriyor
+        for kitap in self.kitaplar:
+            if kitap.isim == kitap_adi: #kontrol ediyor
+                kitap.stok+=1 #kiatp ekliyor
+                print(f"{kitap.isim} kütüphaneye verildi .{kitap.stok} stok adeti  " )
+                return
+        print(f"{kitap_adi} kütüphanede yok...")
+        
+    def kitap_listesi(self):
+        print("kütüphanedeki kitaplarımız")
+        for kitap in self.kitaplar:
+            print(kitap.bilgi())
+                
+kutuphane=Kutuphane()
+ki=Kitap("faruk","calaka",4)
+ki1=Kitap("f","c",7)
+kutuphane.kitap_ekle(ki)
+kutuphane.kitap_ekle(ki1)
+kutuphane.odunc_al("faruk")
+kutuphane.kitap_ver("faruk")
+kutuphane.kitap_ver("faruk")
+kutuphane.kitap_listesi()
