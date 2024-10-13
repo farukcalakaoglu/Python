@@ -1,0 +1,95 @@
+ # Banka Uygulaması bakiye sorgula,bilgi ,para ekle,para cek
+class Banka:
+    def __init__(self, isim, soyisim, sifre, sube, iban, para, ekpara):
+        self.isim = isim
+        self.soyisim = soyisim
+        self.sifre = sifre
+        self.sube = sube
+        self.iban = iban
+        self.para = para
+        self.ekpara = ekpara
+    def bilgi(self):
+        return f"{self.isim} {self.soyisim}, Şube: {self.sube}, IBAN: {self.iban}, Bakiye: {self.para} TL, Ek Para: {self.ekpara} TL"
+    def bilgi1(self):
+        print( f"{self.isim} {self.soyisim}, Şube: {self.sube}, IBAN: {self.iban}, Bakiye: {self.para} TL, Ek Para: {self.ekpara} TL")
+
+    
+    def bakiye_sorgula(self):
+        print(f"adınız ve soyadınız : {self.isim } {self.soyisim},bakiye: {self.para} ekpakiye:{self.ekpara}")
+    def para_cek(self,miktar):
+        if self.para>miktar:
+            self.para-=miktar
+            print(f"{miktar} TL çekildi .Güncel bakiye : {self.para}")
+        else:
+            print(f"cekmek istediğiniz miktar: {miktar}. Bakiyeniz:{self.para}. Ekparanız : {self.ekpara}")
+            pa=input("Bakiye yetersiz . Ek bakiye kullanmak istermisiniz . E/H : ")
+            if pa=="e" or pa=="E":
+                
+              cek=int(input("miktar giriniz: "))
+              if self.ekpara > cek:
+                    self.ekpara-=cek
+                    print(f"{cek} TL para çekildi. Kalan ekpakiye {self.ekpara} ")
+              else:
+                print(f"{self.ekpara} ekpara limit yetersiz. Toplam paranız: {self.para + self.ekpara} . Çekmek istediğiniz miktar : {miktar}")
+            else:
+               print("para cekme işlemi iptal edildi. Tekrar deneyiniz.")
+    def para_ekle(self,miktar):
+        if miktar>0:
+            self.para+=miktar
+            print(f"{miktar} TL hesabınıza eklendi. Güncel bakiye:{self.para}.")
+        else:
+            print("Lütfen geçerli miktarda para yükleyin")
+            
+class Bankasistemi:
+    def __init__(self): 
+        self.kullanicilar=[]
+
+   
+    def kullanici_ekle(self, kullanici):
+        self.kullanicilar.append(kullanici)
+
+        print(f"{kullanici} kullanıcı eklendi.")
+    def login(self,ad,sifre):
+        for kullanici in self.kullanicilar:
+            if kullanici.isim== ad and kullanici.sifre==sifre:
+                print("doğrulama başarılı")
+                return kullanici
+            else:
+                print("bilgiler hatalı")
+    
+banka=Bankasistemi()
+pa=Banka("faruk","dd",4545,"ss","ss4s",4500,4500) #kullanıcı ekler
+ 
+banka.kullanici_ekle(pa)
+ad=input("kullanıcı adınızı giriniz : ")
+sifre=int(input("sifrenizi giriniz : "))
+giris=(ad,sifre)
+loginn=banka.login(*giris)
+
+if loginn:
+    while True:
+        
+       print("Ne işlem yapmak istersiniz?")
+       print("Kullanıcı bilgisi için -1- tuşuna basın.")
+       print("Bakiye sorgulamak için -2- tuşuna basın.")
+       print("Para çekmek için -3- tuşuna basın.")
+       print("Para eklemek için -4- tuşuna basın.")
+       print("cıkmak için -0- tuşuna basın.")
+         
+     
+       tus = int(input("İşlem seçimi: "))
+
+       if tus == 1:
+          loginn.bilgi1()
+       elif tus == 2:
+          loginn.bakiye_sorgula()
+       elif tus == 3:
+          miktar = int(input("Çekmek istediğiniz miktarı giriniz: "))
+          loginn.para_cek(miktar)
+       elif tus == 4:
+          miktar = int(input("Eklemek istediğiniz miktarı giriniz: "))
+          loginn.para_ekle(miktar)
+       elif tus==0:
+          break
+       else:
+          print("Geçersiz tuşlama. Lütfen tekrar deneyiniz.")
