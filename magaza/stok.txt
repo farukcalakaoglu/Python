@@ -1,0 +1,4 @@
+01:kalem:15
+02a:silgi:3
+03a:uc:3
+04a:defter:15
