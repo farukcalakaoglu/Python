@@ -1,0 +1,39 @@
+dizi=[]
+def ekle():
+    ekleme=input("eklenecek içerik: ")
+    eklem= dizi.append(ekleme)
+    print("ekleme başarılı")
+    
+def cikar():
+    if dizi: 
+     ci=input("çıkarmak istediginizi yazın: ")
+     if ci in dizi:
+           dizi.remove(ci)
+           print("çıkarma basarılı")
+     else:
+             print("hatalı yazı")
+    else:
+        print("dizi boş çıkarılcak bir sey yok")
+        
+def icerik():
+    n=0
+    if dizi:
+     for i in dizi:
+        print(i)   
+    else:
+        print("icerik boş ..") 
+while True:
+    print("eklem için 1/ çıkarmak için 2 / içerik görmek için 3 / çıkmak için 4")
+    gir=int(input ("ne yapmak istiyorsunuz: "))
+    if gir == 1:
+        ekle()
+    elif gir == 2:
+        cikar()
+    elif gir ==  3:
+        icerik()
+    elif gir ==   4:
+        print( "cıkılıyor....")
+        break
+    else:
+       print("Hatalı tuşa bastınız ,herhangi bir tuşa basınız..")
+    
