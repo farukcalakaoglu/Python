@@ -1,0 +1,39 @@
+ #kullanıcı adı ve sifre kontrol edilme  try ve except
+def kontrol(ad):
+    import re
+    if len(ad)<3:
+        raise Exception("kullanıcı adınız 3 harten büyük olmalı")
+    elif not re.search("[a-z]",ad):
+        raise Exception("ad küçük harf olmalı")
+    elif not re.search("[A-Z]",ad):
+        raise Exception("ad büyük harff olamlı")
+    elif re.search("[ ]", ad):
+        raise Exception("Kullanıcı adında boşluk olmamalı.") 
+    else:
+        print("ad uygundur..")
+    
+def kontrol1(sifre):
+    import re
+    if len(sifre)<3:
+        raise Exception("sifreniz 3 haneden büyük olamlı")
+    elif not re.search("[a-z]",sifre):
+        raise Exception("sifre küçük harf olmalı")
+    elif not re.search("[A-Z]",sifre):
+        raise Exception("sifrede büyük harf olmalı")
+    elif not re.search("[0-0]",sifre):
+        raise Exception("sifrenizde rakam olmalı")
+    else:
+        print("şifrenizde hata yok...")
+kul=input("kullanıcı adınız:")
+sifre=input("şifreniz: ")
+try:
+    
+    kontrol(kul)
+     
+except Exception as e:
+    print("Hata:",e)
+
+try:
+    kontrol1(sifre)
+except Exception as e:
+    print( "Hata:",e)
