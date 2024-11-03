@@ -1,0 +1,24 @@
+import requests
+import json
+#doviz hesapla
+class para:
+    def __init__(self):
+       self.api_url = "https://v6.exchangerate-api.com/v6/005869d78379bdd4e0dd06ad/latest/"
+    def hesapla(self, boz_dov):
+        response = requests.get(self.api_url + boz_dov)
+        data = response.json()
+        return data
+
+par=para()      
+print("Döviz hesapla".center(50,"*"))
+boz_dov=input("bozdurulacak döviz: ")
+al_dov=input("bozdulacak doviz: ")
+kac=float(input(f"{boz_dov} ne kadar bozdurmak istersiniz: "))
+ek=par.hesapla(boz_dov)
+
+try:
+    sonuc = kac * ek['conversion_rates'][al_dov]
+    print(f"{kac} {boz_dov} = {sonuc:.2f} {al_dov}")
+except KeyError:
+    print("Geçersiz döviz kodu.")
+
