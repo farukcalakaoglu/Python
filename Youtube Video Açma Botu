@@ -1,0 +1,43 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+url = "https://www.youtube.com/"
+driver = webdriver.Chrome()  # Chrome sürücüsünü başlatın
+driver.get(url)  # YouTube'a gidin
+
+# Arama çubuğunun kullanılabilir olmasını bekleyin
+search_bar = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.CSS_SELECTOR, "input[name='search_query']"))
+)
+
+arlanan_kelime = "kurtlar vadisi pusu 1.bölüm"  # Aranacak kelimeyi tanımlayın
+search_bar.send_keys(arlanan_kelime)  # Arama çubuğuna yazın
+
+# Arama düğmesinin kullanılabilir olmasını bekleyin
+search_button = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.CSS_SELECTOR, "button#search-icon-legacy"))
+)
+search_button.click()  # Aramaya tıklayın
+
+# Sayfanın yüklenmesi için biraz bekleyin (gerektiği gibi ayarlayın)
+time.sleep(10)  # Daha güvenilir bekleme için "time.sleep" yerine "WebDriverWait" kullanılması önerilir
+
+# "#contents" içindeki tüm video öğelerini bulun
+video_elementleri = driver.find_elements(By.CSS_SELECTOR, "#contents .ytd-video-renderer")
+
+# Video öğelerini ve bağlantıları döngü içinde yazdırın
+for video_elementi in video_elementleri:
+    try:
+        video_basligi = video_elementi.find_element(By.CSS_SELECTOR, ".ytd-video-renderer a.yt-simple-endpoint.style-scope.ytd-video-renderer")
+        video_linki = video_elementi.find_element(By.TAG_NAME, "a").get_attribute("href")
+        driver.get(video_linki)
+        print(f"Başlık: {video_basligi}")  # Başlığı daha okunaklı formatta yazdırın
+        print(f"Bağlantı: {video_linki}")  # Bağlantıyı daha okunaklı formatta yazdırın
+    except NameError :
+        print("Bir video için başlık veya bağlantı öğesi bulunamadı.")  # Daha uygun hata mesajı
+         
+# Tarayıcıyı kapatın (isteğe bağlı)
+driver.quit()
