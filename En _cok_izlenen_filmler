@@ -1,0 +1,32 @@
+import requests
+from bs4 import BeautifulSoup
+class site:
+    def __init__(self,url):
+        self.url=url
+        
+    def gir(self):
+       try: 
+        self.af={"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"}
+        html=requests.get(self.url,headers=self.af).content
+        fil=BeautifulSoup(html,"html.parser")
+        gi=fil.find_all("li",{"class":"film"}) 
+        n=1
+        for i in gi:
+            ad=i.find("a",{"class":"tt"}).text
+            puan=i.find("span",{"class":"imdb"}).text
+            film_yil=i.find("span",{"class":"film-yil"}).text
+            tur=i.find("span",{"class":"ktt"}).text
+            link=i.a.get("href")
+            print(n,".film:",ad)       
+            print("idmp puanı:",puan)
+            print(f"film yılı:{film_yil}")   
+            print(f"film Türü:{tur}")
+            print(f"Film linki:{link}")
+            print("\n")
+            n+=1
+       except ZeroDivisionError:
+           print("hata")
+url="https://www.fullhdfilmizlesene.de/en-cok-izlenen-filmler"
+sitee=site(url)
+
+sitee.gir()
