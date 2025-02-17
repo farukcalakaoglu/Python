@@ -1,0 +1,44 @@
+import numpy as np
+import time
+
+def LevenshteinMesafe(A, B):
+    A_len, B_len = len(A), len(B)
+    K = np.zeros((A_len + 1, B_len + 1))
+
+    # İlk satır ve sütunu doldurma
+    for i in range(A_len + 1):
+        K[i][0] = i
+    for j in range(B_len + 1):
+        K[0][j] = j
+
+    # Levenshtein algoritmasını uygula
+    for i in range(1, A_len + 1):
+        for j in range(1, B_len + 1):
+            if A[i - 1] == B[j - 1]:  # Harfler aynıysa
+                K[i][j] = K[i - 1][j - 1]
+            else:
+                silme = K[i - 1][j] + 1
+                ekleme = K[i][j - 1] + 1
+                yerdegistirme = K[i - 1][j - 1] + 1
+                K[i][j] = min(silme, ekleme, yerdegistirme)
+
+    return K[A_len][B_len]  # Son hücre sonucu verir
+while True:
+# Kullanıcıdan giriş alma
+ kelime_1 = input("1. kelimeyi girin: ")
+ kelime_2 = input("2. kelimeyi girin: ")
+
+# Levenshtein mesafesini hesapla
+ mesafe = LevenshteinMesafe(kelime_1, kelime_2)
+
+# Benzerlik oranını hesapla
+ max_len = max(len(kelime_1), len(kelime_2))
+ benzerlik_oran = (max_len - mesafe) / max_len
+
+# Sonuçları yazdır
+ print(f"'{kelime_1}' ve '{kelime_2}' arasındaki Levenshtein mesafesi: {mesafe}")
+ print(f"Benzerlik oranı: {benzerlik_oran:.2f}")
+
+ print("7 sn bekle...")
+ time.sleep(7)
+ 
