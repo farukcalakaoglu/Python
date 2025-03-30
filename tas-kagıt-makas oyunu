@@ -1,0 +1,44 @@
+from random import *
+import time
+
+def oyun():
+ dizi=["taş","kagıt","makas"]
+ hak=5
+ ben=0
+ mak=0
+ print("taş kagıt makas oyunu")
+ print("hakkın:5")
+ while hak>=0:
+  a=input("tas kagıt makas birini yaz:").lower()
+ 
+  ad=choice(dizi)
+  if a in ad:
+    print("kazandın.")
+    ben+=1
+    print(f"puan:{ben}")
+ 
+    print("\n")
+
+  else:
+    print("kaybettin") 
+    print(f"makinenin sectiği:{choice(dizi)}")
+    mak+=1
+    hak-=1
+    print(f"{hak}: hakkınkaldı")
+    print("\n")
+  if hak==0:
+   break
+
+ print(f"puanın:{ben}")
+ k=input("tekrar oynamak istiyorsunuz:")
+ if k=="e":
+   hak==5
+   oyun()
+ elif k=="h":
+   print("oyundan cıkılıyor...")
+   time.sleep(2)
+   quit
+ else:
+   print("e-h yazın...")
+
+oyun()
